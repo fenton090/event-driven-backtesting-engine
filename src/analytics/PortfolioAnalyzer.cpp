@@ -35,9 +35,9 @@ std::vector<double> PerformanceAnalyzer::computeReturnSeries() const {
 double PerformanceAnalyzer::computeSharpeRatio(double riskFreeRate) const {
     auto returns = computeReturnSeries();
 
-    if(returns.empty()) return 0.0;
+    if(returns.size() == 0) return 0.0;
 
-    int sum = 0;
+    double sum = 0.0;
     for(double r : returns) {
         sum+=r;
     }
