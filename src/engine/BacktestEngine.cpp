@@ -7,6 +7,7 @@ BacktestEngine::BacktestEngine(const string& dataFile) : dataHandler(dataFile) {
     strategy = make_unique<SimpleStrategy> ();
     portfolio = make_unique<Portfolio> (10000.0);
     execution = make_unique<ExecutionHandler> ();
+    performanceAnalyzer = make_unique<PerformanceAnalyzer> ();
 }
 
 void BacktestEngine::run() {
@@ -25,9 +26,11 @@ void BacktestEngine::run() {
                 portfolio->onMarketEvent(me);
                 execution->onMarketEvent(me);
 
-                std::cout << "Portfolio Value: "
-                << portfolio->getPortfolioValue()
-                << "\n";
+                double value = portfolio->getPortfolioValue();
+                performanceAnalyzer->record(value);
+
+                std::cout<< "Portfolio sharpe ratio: " << performanceAnalyzer->computeSharpeRatio() << "\n";
+                std::cout<< "Max drawdown: " << performanceAnalyzer->computeMaxDrawdown() << "\n";
 
                 std::cout << "PnL: " << portfolio->getPnl() << "\n";
                 std::cout << "----------------------\n";
