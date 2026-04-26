@@ -4,7 +4,7 @@
 using namespace std;
 
 BacktestEngine::BacktestEngine(const string& dataFile) : dataHandler(dataFile) {
-    strategy = make_unique<SimpleStrategy> ();
+    strategy = make_unique<MovingAverageCrossoverStrategy> (3, 5);
     portfolio = make_unique<Portfolio> (10000.0);
     execution = make_unique<ExecutionHandler> ();
     performanceAnalyzer = make_unique<PerformanceAnalyzer> ();

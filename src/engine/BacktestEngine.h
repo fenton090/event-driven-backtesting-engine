@@ -5,6 +5,7 @@
 #include "../data/MarketDataHandler.h"
 #include "../strategy/Strategy.h"
 #include "../strategy/SimpleStrategy.h"
+#include "../strategy/MovingAverageCrossoverStrategy.h"
 #include "../portfolio/Portfolio.h"
 #include "../execution/ExecutionHandler.h"
 #include "../analytics/PerformanceAnalyzer.h"
