@@ -1,4 +1,4 @@
-#include "../events/PerformanceAnalyzer.h"
+#include "PerformanceAnalyzer.h"
 
 #include <cmath>
 

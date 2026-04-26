@@ -1,4 +1,4 @@
-#include "../events/Portfolio.h"
+#include "Portfolio.h"
 #include <iostream>
 
 using namespace std;

@@ -1,4 +1,4 @@
-#include "../events/BacktestEngine.h"
+#include "BacktestEngine.h"
 #include <iostream>
 
 using namespace std;
@@ -59,8 +59,6 @@ void BacktestEngine::run() {
                 auto fe = static_pointer_cast<FillEvent>(event);
 
                 portfolio->onFillEvent(fe);
-
-                
             }
         }
     }

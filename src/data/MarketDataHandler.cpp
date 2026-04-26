@@ -1,4 +1,4 @@
-#include "../events/MarketDataHandler.h"
+#include "MarketDataHandler.h"
 #include <sstream>
 #include <iostream>
 
@@ -10,6 +10,9 @@ MarketDataHandler::MarketDataHandler(const string& filename) {
     if(!file.is_open()) {
         cerr<<"Error opening file\n";
     }
+
+    std::string header;
+    getline(file, header);
 }
 
 shared_ptr<MarketEvent> MarketDataHandler::getNextEvent() {
@@ -19,14 +22,29 @@ shared_ptr<MarketEvent> MarketDataHandler::getNextEvent() {
     }
 
     stringstream ss(line);
-    string symbol, pricestr, volumestr, timestamp;
-    getline(ss, symbol, ',');
-    getline(ss, pricestr, ',');
+    std::string date, open, high, low, close, volumestr;
+    getline(ss, date, ',');
+    getline(ss, open, ',');
+    getline(ss, high, ',');
+    getline(ss, low, ',');
+    getline(ss, close, ',');
     getline(ss, volumestr, ',');
-    getline(ss, timestamp, ',');
 
-    double price = stod(pricestr);
-    long long volume = stoll(volumestr);
+    if(close.empty() || volumestr.empty()) {
+        return getNextEvent();
+    }
 
-    return make_shared<MarketEvent>(symbol, price, volume, timestamp);
+    double price;
+    long long volume;
+
+    try {
+        price = stod(close);
+        volume = stoll(volumestr);
+    } catch(const std::exception& e) {
+        cerr<<"Error parsing line: " << line << "\n";
+        return getNextEvent();
+    }
+    
+
+    return make_shared<MarketEvent>("AAPL", price, volume, date);
 }
